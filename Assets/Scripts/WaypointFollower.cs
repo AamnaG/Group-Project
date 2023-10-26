@@ -9,7 +9,7 @@ public class WaypointFollower : MonoBehaviour
 
     [SerializeField] float speed = .1f;
 
-    void Update()
+    void FixedUpdate()
     {
         if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].transform.position) < .1f)
         {
@@ -21,5 +21,15 @@ public class WaypointFollower : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.transform.SetParent(transform);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        other.transform.SetParent(null);
     }
 }
