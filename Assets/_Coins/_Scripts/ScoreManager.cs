@@ -5,6 +5,7 @@ public class ScoreManager : MonoBehaviour
 {
     public int scoreValue;
     public TextMeshProUGUI Score;
+    public int coinsCollected = 0;
     public static ScoreManager instance;
     private void Awake()
     {
@@ -18,11 +19,12 @@ public class ScoreManager : MonoBehaviour
     }
     private void updateScore()
     {
-        Score.text ="Score: " + PlayerPrefs.GetInt("Score");
+        Score.text ="Score: " + coinsCollected;
     }
     public void addScore()
     {
-        PlayerPrefs.SetInt("Score", (PlayerPrefs.GetInt("Score") + scoreValue));
+        //PlayerPrefs.SetInt("Score", (PlayerPrefs.GetInt("Score") + scoreValue));
+        coinsCollected += scoreValue;
         updateScore();
     }
 }
