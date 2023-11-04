@@ -15,7 +15,6 @@ public class CheckpointManager : MonoBehaviour
             {
                 GameManager.Instance.SetCheckpoint(transform.position); // Set the checkpoint position in the GameManager
                 _activated = true;
-                // Add any other effects you want for the activated checkpoint
             }
             else
             {
