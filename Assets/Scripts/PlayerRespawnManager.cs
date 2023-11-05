@@ -8,17 +8,20 @@ public class PlayerRespawnManager : MonoBehaviour
 
     void Start()
     {
-        _respawnPoint = transform.position; // Set the initial spawn point as the player's starting position
+        // Set the initial spawn point as the player's starting position
+        _respawnPoint = transform.position;
     }
 
     public void RespawnPlayer()
     {
-        transform.position = _respawnPoint; // Respawn the player at the stored respawn point
+        // Respawn the player at the stored respawn point
+        transform.position = _respawnPoint;
     }
 
     public void SetRespawnPoint(Vector3 checkpointPosition)
     {
-        _respawnPoint = checkpointPosition; // Update the respawn point to the latest activated checkpoint position
+        // Update the respawn point to the latest activated checkpoint position
+        _respawnPoint = checkpointPosition;
         Debug.Log("Respawn point set to: " + _respawnPoint);
     }
 

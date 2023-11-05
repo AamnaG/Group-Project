@@ -11,9 +11,11 @@ public class CheckpointManager : MonoBehaviour
     {
         if (other.CompareTag("Player") && !_activated)
         {
-            if (GameManager.Instance != null) // Check if the GameManager instance is not null
+            // Check if the GameManager instance is not null
+            if (GameManager.Instance != null)
             {
-                GameManager.Instance.SetCheckpoint(transform.position); // Set the checkpoint position in the GameManager
+                // Set the checkpoint position in the GameManager
+                GameManager.Instance.SetCheckpoint(transform.position);
                 _activated = true;
             }
             else

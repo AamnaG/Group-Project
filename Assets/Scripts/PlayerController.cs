@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    ////////// New variables for mouse controls
+    // Variables for mouse controls
     public float mouseSensitivity = 500f;
     private float mouseRotation = 0f;
-    //////////
+    //
 
     public float moveValue;
     public float rotateValue;
@@ -40,15 +40,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    ////////////////////////////////////////////// Start() edited for mouse controls
     void Start()
     {
         // Lock the cursor to the center of the screen and hide it
         Cursor.lockState = CursorLockMode.Locked;
     }
-    ///////////////////////////////////////////////
-
 
     // Jump related
     private void OnCollisionStay(Collision collision)
@@ -56,8 +52,6 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
     }
 
-
-    ////////////////////////////////////////// Update() edited for mouse controls
     void Update()
     {
         // Get mouse input for camera rotation
@@ -74,9 +68,7 @@ public class PlayerController : MonoBehaviour
         // Apply the rotation to the player's camera
         Camera.main.transform.localRotation = Quaternion.Euler(mouseRotation, 0f, 0f);
     }
-    //////////////////////////////////////////////
     
-
     void FixedUpdate()
     {
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass); // simulates gravity scale to make jump less 'floaty'

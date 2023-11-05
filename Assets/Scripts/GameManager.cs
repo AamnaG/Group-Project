@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private PlayerRespawnManager _playerRespawnManager; // Reference to the PlayerRespawnManager
+    private PlayerRespawnManager _playerRespawnManager;
 
     void Awake()
     {
@@ -21,13 +21,13 @@ public class GameManager : MonoBehaviour
     // This method is called from CheckpointManager to set the respawn point to the latest activated checkpoint
     public void SetCheckpoint(Vector3 checkpointPosition)
     {
-        _playerRespawnManager.SetRespawnPoint(checkpointPosition); // Set the respawn point in the PlayerRespawnManager
+        _playerRespawnManager.SetRespawnPoint(checkpointPosition);
     }
 
     // This method is called when the player dies to respawn at the latest checkpoint
     public void RespawnPlayer()
     {
-        _playerRespawnManager.RespawnPlayer(); // Respawn player using the PlayerRespawnManager
+        _playerRespawnManager.RespawnPlayer();
     }
 }
 
