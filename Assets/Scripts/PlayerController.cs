@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 direction;
 
+    public GameObject optionsMenu;
+
     void OnMove(InputValue value)
     {
         moveValue = value.Get<Vector2>().y;
@@ -67,6 +69,12 @@ public class PlayerController : MonoBehaviour
 
         // Apply the rotation to the player's camera
         Camera.main.transform.localRotation = Quaternion.Euler(mouseRotation, 0f, 0f);
+
+        // opens the options menu if the escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleOptionsMenu();
+        }
     }
     
     void FixedUpdate()
@@ -92,6 +100,16 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }*/
             
+    }
+
+    void ToggleOptionsMenu()
+    {
+        // toggles the visibility of the options menu if its on/off
+        optionsMenu.SetActive(!optionsMenu.activeSelf);
+
+        // toggles the cursor lock based on the menu visibility
+        Cursor.lockState = optionsMenu.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = optionsMenu.activeSelf;
     }
 
  

@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public Slider sensitivitySlider;
-
-    public void SetMouseSensitivity(float sensitivity)
+    public PlayerController playerController;
+    public void OnMouseSensitivityChange(float value)
     {
-        // sets sensitivity to the slider value
-        FindObjectOfType<PlayerController>().mouseSensitivity = sensitivity;
+        // updates the sensitivity to the slider value
+        playerController.mouseSensitivity = value;
     }
+
 }
 
