@@ -9,7 +9,6 @@ public class altitudeScore : MonoBehaviour
     public Transform player; // put player game object in this in the editor
     public TextMeshProUGUI altitudeText; // altitude text element on the scene
 
-    // Update is called once per frame
     void Update()
     {
         if (player != null && altitudeText != null)

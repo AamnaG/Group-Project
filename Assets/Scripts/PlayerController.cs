@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // Variables for mouse controls
+    public float mouseSensitivity = 500f;
+    private float mouseRotation = 0f;
+    //
+
     public float moveValue;
     public float rotateValue;
     public float moveSpeed;
@@ -18,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public float gravityScale = 5;
 
     private Vector3 direction;
+
+    public GameObject optionsMenu;
 
     void OnMove(InputValue value)
     {
@@ -35,10 +42,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        // Lock the cursor to the center of the screen and hide it
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Jump related
@@ -47,12 +54,29 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Get mouse input for camera rotation
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
+        // Rotate the player object based on the mouse input
+        transform.Rotate(Vector3.up * mouseX);
+
+        // Calculate the rotation for the camera up and down
+        mouseRotation -= mouseY;
+        mouseRotation = Mathf.Clamp(mouseRotation, -90f, 90f);
+
+        // Apply the rotation to the player's camera
+        Camera.main.transform.localRotation = Quaternion.Euler(mouseRotation, 0f, 0f);
+
+        // opens the options menu if the escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleOptionsMenu();
+        }
     }
-
+    
     void FixedUpdate()
     {
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass); // simulates gravity scale to make jump less 'floaty'
@@ -76,6 +100,16 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }*/
             
+    }
+
+    void ToggleOptionsMenu()
+    {
+        // toggles the visibility of the options menu if its on/off
+        optionsMenu.SetActive(!optionsMenu.activeSelf);
+
+        // toggles the cursor lock based on the menu visibility
+        Cursor.lockState = optionsMenu.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = optionsMenu.activeSelf;
     }
 
  
