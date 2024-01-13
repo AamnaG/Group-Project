@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject optionsMenu;
 
+    public ParticleSystem dust;
+
     void OnMove(InputValue value)
     {
         moveValue = value.Get<Vector2>().y;
@@ -39,6 +41,11 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
             Vector3 jump = new Vector3(0.0f, jumpForce, 0.0f);
             GetComponent<Rigidbody>().AddForce(jump, ForceMode.Impulse);
+
+            if (dust != null)
+            {
+                dust.Play();
+            }
         }
     }
 
