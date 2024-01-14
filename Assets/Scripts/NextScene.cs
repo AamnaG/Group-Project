@@ -11,6 +11,8 @@ public class NextScene : MonoBehaviour
     // the scene will transition to the new scene
     void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene(sceneName);
         }
     }
