@@ -9,7 +9,7 @@ public class CoinCollection : MonoBehaviour
         {
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-            //CoinParticles.SetActive(true); // Activates particle animation for disappearing coin
+            CoinParticles.SetActive(true); // Activates particle animation for disappearing coin
             ScoreManager.instance.addScore();
             Invoke("destroyCoin", 2f);
         }
