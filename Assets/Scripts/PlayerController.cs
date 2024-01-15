@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 
 public class PlayerController : MonoBehaviour
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float gravityScale = 5;
 
+    public float reboundForce;
+
     private Vector3 direction;
 
     public GameObject optionsMenu;
@@ -35,6 +39,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnJump(InputValue value)
+    {
+        Jump();
+    }
+
+    // No InputValue parameter, so makes the Jump() reusable
+    void Jump()
     {
         if (isGrounded)
         {
@@ -52,13 +62,35 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         // Lock the cursor to the center of the screen and hide it
-        Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Jump related
     private void OnCollisionStay(Collision collision)
     {
         isGrounded = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Enemy!!");
+            //Vector3 direction = new Vector3(Mathf.Cos(Mathf.Deg2Rad*(90 - transform.eulerAngles.z)), Mathf.Sin(Mathf.Deg2Rad*(90 - transform.eulerAngles.z)), Mathf.Sin(Mathf.Deg2Rad*(90 - transform.eulerAngles.y))) * -1;
+            //GetComponent<Rigidbody>().AddForce(direction * reboundForce, ForceMode.Impulse);
+
+            //Vector3 movement = moveValue * -Vector3.forward;
+            rb.AddForce(moveValue * Vector3.forward * reboundForce, ForceMode.Impulse);
+            Debug.Log("Rebounded!");
+            //transform.Translate(movement * moveSpeed * Time.fixedDeltaTime);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy Head"))
+        {
+            Debug.Log("Killing Enemy!");
+            Destroy(collision.transform.parent.gameObject);
+            Jump();
+        }
     }
 
     void Update()
@@ -115,8 +147,8 @@ public class PlayerController : MonoBehaviour
         optionsMenu.SetActive(!optionsMenu.activeSelf);
 
         // toggles the cursor lock based on the menu visibility
-        Cursor.lockState = optionsMenu.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = optionsMenu.activeSelf;
+        UnityEngine.Cursor.lockState = optionsMenu.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = optionsMenu.activeSelf;
     }
 
  
