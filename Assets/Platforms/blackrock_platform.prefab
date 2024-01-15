@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4530761394508876122}
   - component: {fileID: -3903218195043512083}
   m_Layer: 0
-  m_Name: flalling_platform1
+  m_Name: blackrock_platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

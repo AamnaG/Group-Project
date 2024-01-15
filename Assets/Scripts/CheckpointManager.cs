@@ -6,6 +6,18 @@ public class CheckpointManager : MonoBehaviour
 {
     private bool _activated = false; // Check if the checkpoint has been activated
 
+    public Color activatedColor = Color.green;
+    private Renderer checkpointRenderer;
+
+    void Start()
+    {
+        checkpointRenderer = GetComponent<Renderer>();
+
+        if (checkpointRenderer == null)
+        {
+            Debug.LogError("No Renderer attached to the checkpoint.");
+        }
+    }
     // Triggered when another collider enters the checkpoint's trigger collider
     void OnTriggerEnter(Collider other)
     {
@@ -17,6 +29,12 @@ public class CheckpointManager : MonoBehaviour
                 // Set the checkpoint position in the GameManager
                 GameManager.Instance.SetCheckpoint(transform.position);
                 _activated = true;
+
+                // change colour at checkpoint
+                if (checkpointRenderer != null)
+                {
+                    checkpointRenderer.material.color = activatedColor;
+                }
             }
             else
             {
