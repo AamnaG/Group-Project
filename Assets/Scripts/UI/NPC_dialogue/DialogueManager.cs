@@ -15,7 +15,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float typingSpeed = 0.05f;
     [SerializeField] private float turnSpeed = 2f; // how quickly we turn towards npc
     
-    private List<dialogueString> dialogueList;
+    private List<dialogueString> dialogueList; // list of dialogue strings to display
 
     [Header("Player")]
     [SerializeField] private PlayerController thirdPersonController;
@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
 
     private int currentDialogueIndex = 0;
 
+    // Initialise dialogue UI and player camera
     private void Start()
     {
         dialogueParent.SetActive(false);
@@ -31,6 +32,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DialogueStart(List<dialogueString> textToPrint, Transform NPC)
     {
+        // start dialogue interaction
         dialogueParent.SetActive(true);
         thirdPersonController.enabled = false;
         
@@ -38,6 +40,7 @@ public class DialogueManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        // turn camera towards npc and start displaying dialogue
         StartCoroutine(TurnCameraTowardsNPC(NPC));
 
         dialogueList = textToPrint;
@@ -60,12 +63,14 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TurnCameraTowardsNPC(Transform NPC)
     {
+        // coroutine to smoothly turn camera towards npc
         Quaternion startRotation = playerCamera.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(NPC.position - playerCamera.position);
 
         float elapsedTime = 0f;
         while(elapsedTime < 1f)
         {
+            // rotate camera towards npc over time
             playerCamera.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime);
             elapsedTime += Time.deltaTime * turnSpeed;
             yield return null;
@@ -78,6 +83,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator PrintDialogue()
     {
+        // coroutine to handle the dialogue display logic
         while(currentDialogueIndex < dialogueList.Count)
         {
             dialogueString line = dialogueList[currentDialogueIndex];
@@ -86,6 +92,7 @@ public class DialogueManager : MonoBehaviour
 
             if(line.isQuestion)
             {
+                // if dialogue is question, display and wait for a response
                 yield return StartCoroutine(TypeText(line.text));
 
                 option1Button.interactable = true;
@@ -101,6 +108,7 @@ public class DialogueManager : MonoBehaviour
             }
             else 
             {
+                // else if line is not question, just diaply it
                 yield return StartCoroutine(TypeText(line.text));
             }
 
@@ -109,9 +117,10 @@ public class DialogueManager : MonoBehaviour
             optionSelected = false;
         }
 
-        DialogueStop();
+        DialogueStop(); // end of dialogue interaction
     }
 
+    // handle player's choice of dialogue option
     private void HandleOptionSelected(int indexJump)
     {
         optionSelected = true;

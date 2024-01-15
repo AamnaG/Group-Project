@@ -6,12 +6,14 @@ public class FallingPlatform : MonoBehaviour
     public float fallDelay = 0.5f; // Time before platform begins to fall
     public float respawnDelay = 3f; // Time before platform respawns
     private Vector3 startPosition;
+    private Quaternion startRotation;
     private Rigidbody rb;
 
     // Initially, the platform is unaffected by physics due to isKinematic being true
     void Start()
     {
         startPosition = transform.position;
+        startRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.useGravity = false;
@@ -41,7 +43,7 @@ public class FallingPlatform : MonoBehaviour
     void Respawn()
     {
         transform.position = startPosition;
-        transform.rotation = Quaternion.identity;
+        transform.rotation = startRotation;
         rb.isKinematic = true;
         rb.useGravity = false;
     }

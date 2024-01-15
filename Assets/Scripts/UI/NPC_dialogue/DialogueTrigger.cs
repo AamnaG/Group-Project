@@ -20,7 +20,7 @@ public class DialogueTrigger : MonoBehaviour
 }
 
 [System.Serializable]
-
+// To form the dialogue and possible branches
 public class dialogueString
 {
     public string text; // Text by NPC
